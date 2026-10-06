@@ -2,7 +2,7 @@
 {
   "name": "Big Investors Holdings",
   "schemaVersion": 1,
-  "description": "大型投资机构持仓跟踪看板（2026 Q2 13F 全量更新：11家已全部提交，潘兴经母公司披露）"
+  "description": "大型投资机构持仓跟踪看板（14家：11家 2026Q2 13F + 伯里13F + 佩洛西国会披露 + 特朗普总统披露）"
 }
 </script>
 <html lang="zh-CN">
@@ -69,14 +69,14 @@ tr:hover td{background:#f8faff}
 <body>
 <div class=container>
 <div class=header>
-<div><h1>📊 二级市场大佬持仓看板</h1><div class=subtitle>巴菲特 · 段永平 · 木头姐 · 李录 · 但斌 · 高盛 · 贝莱德 · 橡树 · Baupost · 潘兴 · 第三点 - 2026 Q2 13F · 8/14截止 · 11家已全部提交(潘兴经母公司Pershing Square Inc.)</div></div>
-<div class=header-right><div>数据: Q2 2026 13F (SEC原始) · 巴菲特/段永平/李录/第三点/潘兴等已更新 · 2026-08-14 Q2截止日</div><div class=data-time id=refreshTime>加载中...</div><button class=refresh-btn onclick=refreshData()>🔄 刷新</button></div>
+<div><h1>📊 二级市场大佬持仓看板</h1><div class=subtitle>巴菲特 · 段永平 · 木头姐 · 李录 · 但斌 · 高盛 · 贝莱德 · 橡树 · Baupost · 潘兴 · 第三点 · 伯里 · 佩洛西 · 特朗普 — 11家 2026 Q2 13F + 伯里13F(2025Q3) + 佩洛西国会披露 + 特朗普总统披露</div></div>
+<div class=header-right><div>数据: SEC 13F / 众议院 PTR / OGE 财务披露 · 更新 2026-10-06</div><div class=data-time id=refreshTime>加载中...</div><button class=refresh-btn onclick=refreshData()>🔄 刷新</button></div>
 </div>
 <div class=summary-grid id=summaryCards></div>
 <div class=section>
-<div class=section-title>📋 完整持仓明细 <span class=count>点击上方卡片 / Tab 切换</span></div>
+<div class=section-title>📋 持仓明细 <span class=count>点击上方卡片 / Tab 切换 · 后三位口径不同，已单独标注</span></div>
 <div class=tabs id=detailTabs></div>
-<div class=data-source id=detailSource>数据来源: SEC 13F · 东方财富 · 财联社 · 13radar</div>
+<div class=data-source id=detailSource>数据来源: SEC 13F · 众议院披露 · OGE</div>
 <div id=detailContent></div>
 </div>
 <div class=section>
@@ -88,7 +88,7 @@ tr:hover td{background:#f8faff}
 <div class=table-wrap style=max-height:none id=perfTable></div>
 </div>
 <div class=section>
-<div class=section-title>📈 行业配置 & 规模对比</div>
+<div class=section-title>📈 行业配置 & 规模对比 <span class=count>仅含13F多头口径机构</span></div>
 <div class=chart-grid>
 <div class=chart-box><canvas id=industryChart></canvas></div>
 <div class=chart-box><canvas id=investorAumChart></canvas></div>
@@ -96,13 +96,13 @@ tr:hover td{background:#f8faff}
 </div>
 </div>
 <div class=section>
-<div class=section-title>🔄 最新调仓动态 <span class=count>Q2 2026 重点变化</span></div>
+<div class=section-title>🔄 最新调仓动态 <span class=count>2026 重点变化</span></div>
 <div id=recentMoves><div class=moves-grid id=movesGrid></div></div>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin=anonymous></script>
 <script>
-/* ========== 11位投资人 Q2 2026 13F (11家已全部提交, 潘兴经母公司披露) ========== */
+/* ========== 14位人物/机构 (11家 2026Q2 13F + 伯里13F + 佩洛西国会披露 + 特朗普总统披露) ========== */
 const P={
 buffet:{id:'buffet',name:'巴菲特',full:'Greg Abel / Berkshire Hathaway',color:'#8B4513',aum:'$2,993亿(Q2)',aumNum:2993,source:'SEC 13F Q2 2026原始数据',url:'https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/0001193125-26-352200-index.htm',
 q2:true,note:'✅ Q2已提交(8/14) · 26只持仓',
@@ -160,7 +160,6 @@ h:[
 ['TRMD','TORM plc',10.30,'$6.75亿','','净减持'],['EXE','Expand Energy Corp',8.80,'$5.75亿','','新增'],['QQQ (Put)','QQQ看跌期权',5.00,'$3.29亿','','新建仓'],['AU','AngloGold Ashanti',4.80,'$3.14亿','','增持'],['GTX','Garrett Motion',4.00,'$2.65亿','','增持'],['INDV','Indivior Pharma',3.20,'$2.13亿','','新建仓'],['CORZ (Call)','Core Scientific看涨',2.90,'$1.92亿','','增持'],['XOP (Put)','油气ETF看跌期权',2.80,'$1.82亿','','新建仓'],['TDS','Telephone & Data Sys',2.80,'$1.81亿','','增持'],['VNOM','Viper Energy',2.70,'$1.78亿','','减持'],['PBR','Petrobras',1.90,'$1.26亿','','新建仓'],['CRDO','Credo Technology',0.80,'$0.51亿','','新建仓'],['COIN Cv','Coinbase可转债',0.80,'$0.52亿','','新建仓'],['YPF','YPF SA',0.60,'$0.41亿','','新建仓'],['TLN (Call)','Talen Energy看涨',0.50,'$0.33亿','','新建仓'],['GOLD','Barrick Gold',0.40,'$0.28亿','','减持'],['KMI','Kinder Morgan',0.30,'$0.18亿','','增持'],['CVI','CVR Energy',0.20,'$0.13亿','','减持'],['PBF','PBF Energy',0.20,'$0.12亿','','减持'],['LYB (Put)','LyondellBasell看跌',0.20,'$0.12亿','','新建仓']],
 mv:[['QQQ Put','QQQ看跌期权','新建$3.29亿 对冲科技'],['XOP Put','油气ETF看跌','新建$1.82亿'],['TRMD','Torm油轮','净减持'],['PBR','巴西石油','新建$1.26亿'],['CRDO','Credo Tech','新建$0.51亿'],['COIN Cv','Coinbase可转债','新建$0.52亿'],['INDV','Indivior','新建$2.13亿']]},
 
-/* ---- Baupost Group / Seth Klarman (Q2 2026数据) ---- */
 baupost:{id:'baupost',name:'Baupost',full:'Seth Klarman / Baupost Group',color:'#1a5276',aum:'$51.2亿(Q2)',aumNum:51.2,source:'SEC 13F Q2 2026 · CNBC/媒体',
 q2:true,note:'✅ Q2已提交(8/14) · 加仓AMZN 20%至$8.92亿 · 新建仓潘兴广场 · 清仓PCVX/WTW',
 ia:{Technology:10,Consumer:22,Industrial:25,Healthcare:12,Financial:14,Energy:3,Other:14},
@@ -168,7 +167,6 @@ h:[
 ['AMZN','Amazon.com',17.4,'$8.92亿','','+20%加仓'],['QSR','Restaurant Brands Intl',11.67,'$5.97亿','','持平'],['WCC','Wesco International',7.69,'$3.93亿','','+1.3%'],['UNP','Union Pacific',7.31,'$3.74亿','','-5.3%'],['ELV','Elevance Health',7.30,'$3.73亿','','+0.5%'],['GOOG','Alphabet C',9.4,'$4.8亿(约)','','大幅加仓'],['FERG','Ferguson Enterprises',6.58,'$3.36亿','','+26.9%'],['AON','Aon PLC',4.85,'$2.48亿','','新建仓'],['V','Visa A',4.14,'$2.12亿','','新建仓'],['TFX','Teleflex',3.73,'$1.91亿','','新建仓'],['EXP','Eagle Materials',3.31,'$1.70亿','','-24.7%'],['GPC','Genuine Parts',3.08,'$1.58亿','','持平'],['LBTYK','Liberty Global',3.07,'$1.57亿','','-35.9%'],['HLF','Herbalife',2.66,'$1.36亿','','持平'],['GDS','GDS Holdings',2.40,'$1.23亿','','持平'],['COLD','Americold Realty',1.74,'$0.89亿','','+123.9%'],['MOH','Molina Healthcare',1.65,'$0.84亿','','持平'],['NCLH','Norwegian Cruise Line',1.33,'$0.68亿','','新建仓'],['PSTH','Pershing Square',0.25,'$0.13亿','','新建仓$13M'],['DNOW','DNOW Inc',0.84,'$0.43亿','','新建仓']],
 mv:[['AMZN','亚马逊','+20%加仓至$8.92亿 第一重仓'],['GOOGL','谷歌','大幅加仓'],['PSTH','潘兴广场','新建仓$13M'],['PCVX','Vaxcyte','清仓'],['WTW','韦莱韬悦','清仓'],['COLD','Americold','+123.9%'],['AON','怡安','新建仓 保险经纪'],['V','Visa','新建仓']]},
 
-/* ---- Pershing Square / Bill Ackman (Q2 2026完整持仓 经母公司Pershing Square Inc.披露) ---- */
 pershing:{id:'pershing',name:'潘兴广场',full:'Bill Ackman / Pershing Square Inc.',color:'#e74c3c',aum:'$195亿(Q2)',aumNum:195,source:'SEC 13F Q2 2026(母公司Pershing Square Inc.)',url:'https://www.sec.gov/Archives/edgar/data/2026053/000117266126003790/',
 q2:true,note:'✅ Q2完整持仓经母公司Pershing Square Inc.披露(8/14) · 14只持仓 · 清仓谷歌 减持亚马逊25%',
 ia:{Technology:34,Financial:29,Consumer:21,RealEstate:10,'Media/Telecom':5,Other:1},
@@ -176,33 +174,56 @@ h:[
 ['UBER','Uber Technologies',12.72,'$24.8亿','34,326K','增持 第一大重仓'],['BN','Brookfield Corp',12.58,'$24.5亿','57,481K','持平'],['MSFT','Microsoft Corp',11.89,'$23.2亿','6,207K','Q2增持 第3大重仓'],['AMZN','Amazon.com',10.49,'$20.4亿','8,564K','-25%减持 第4大重仓'],['HHH','Howard Hughes',10.23,'$19.9亿','28,852K','增持'],['QSR','Restaurant Brands',9.62,'$18.7亿','25,821K','增持'],['META','Meta Platforms',9.25,'$18.0亿','3,196K','Q2增持'],['V','Visa Inc',5.76,'$11.2亿','3,270K','新建仓'],['MA','Mastercard',5.61,'$10.9亿','2,125K','新建仓'],['SPGI','S&P Global',5.43,'$10.6亿','2,593K','新建仓'],['NFLX','Netflix Inc',4.80,'$9.3亿','13,081K','新建仓'],['PS','Pershing Square USA',0.77,'$1.5亿','4,000K','自持'],['SEG','Seaport Entertainment',0.69,'$1.3亿','5,024K','持平'],['HTZ','Hertz Global',0.17,'$0.34亿','14,992K','持平']],
 mv:[['GOOGL+GOOG','谷歌A/C','Q2清仓 完全退出'],['AMZN','亚马逊','-25%减持 仍第4大重仓'],['MSFT','微软','Q2增持 第3大重仓'],['META','Meta','Q2增持'],['UBER','Uber','增持 跃居第一大重仓'],['V/MA/SPGI/NFLX','Visa/万事达/标普全球/奈飞','Q2新建仓合计约$42亿 金融+流媒体']]},
 
-/* ---- Third Point / Dan Loeb (Q2 2026数据) ---- */
 thirdpoint:{id:'thirdpoint',name:'第三点',full:'Dan Loeb / Third Point',color:'#8e44ad',aum:'$46.7亿(Q2)',aumNum:46.7,source:'SEC 13F Q2 2026原始数据',url:'https://www.sec.gov/Archives/edgar/data/1040273/000104027326000003/0001040273-26-000003-index.htm',
-q2:true,note:'✅ Q2已提交(8/14) · 37只持仓',
+q2:true,note:'✅ Q2已提交(8/14) · 24只持仓',
 ia:{Technology:25,Media:14,Industrial:22,Consumer:12,Financial:10,Other:17},
 h:[
 ['WBD','Warner Bros Discovery',11.41,'$5.33亿','20,000K','新建仓 第一大重仓'],['GOOGL','Alphabet A+DEP',9.47,'$4.43亿','1,025K','增持'],['AMZN','Amazon.com',8.92,'$4.17亿','1,750K','增持'],['CRH','CRH PLC',5.03,'$2.35亿','2,195K','减持'],['TDS','Telephone & Data Sys',4.97,'$2.32亿','6,275K','持平'],['TSM','TSMC ADR',4.70,'$2.20亿','460K','增持'],['LYV','Live Nation',4.45,'$2.08亿','1,135K','增持'],['KEYS','Keysight Tech',4.38,'$2.05亿','585K','增持'],['SGI','Somnigroup Intl',4.31,'$2.02亿','2,571K','减持'],['BLOCK','Block Inc',4.16,'$1.94亿','2,559K','增持'],['NSC','Norfolk Southern',4.04,'$1.89亿','600K','增持'],['FLEX','Flex Ltd',3.57,'$1.67亿','1,030K','增持'],['COF','Capital One',3.54,'$1.66亿','825K','增持'],['HUT8','Hut 8 Corp',3.25,'$1.52亿','1,315K','增持'],['CRS','Carpenter Tech',2.84,'$1.33亿','215K','减持'],['APG','API Group',2.60,'$1.21亿','2,865K','减持'],['MTZ','MasTec Inc',2.58,'$1.21亿','290K','减持'],['TDG','TransDigm',2.25,'$1.05亿','79K','增持'],['DHR','Danaher Corp',2.20,'$1.03亿','540K','减持'],['UNP','Union Pacific',2.04,'$0.95亿','350K','减持'],['TTM','TTM Tech',2.02,'$0.94亿','505K','增持'],['ASML','ASML Holding',1.28,'$0.60亿','30K','增持'],['SPACEX','SpaceX',0.66,'$0.31亿','180K','新建仓'],['FLEX/PFG','Performance Food',1.61,'$0.75亿','675K','增持']],
-mv:[['WBD','华纳兄弟探索','新建仓 第一大重仓 $5.33亿'],['SPACEX','SpaceX','新建仓$0.31亿'],['AMZN/GOOGL','亚马逊/谷歌','增持'],['UNP/NSC','联合太平洋/诺福克南方','UNP减持 NSC增持'],['MSFT','微软','清仓'],['NVDA','英伟达','清仓'],['META','Meta','清仓(此前新建仓)'],['AVGO/KLAC/LRCX','博通/科磊/拉姆','清仓半导体设备'],['GLD','黄金ETF','清仓']]}
+mv:[['WBD','华纳兄弟探索','新建仓 第一大重仓 $5.33亿'],['SPACEX','SpaceX','新建仓$0.31亿'],['AMZN/GOOGL','亚马逊/谷歌','增持'],['UNP/NSC','联合太平洋/诺福克南方','UNP减持 NSC增持'],['MSFT','微软','清仓'],['NVDA','英伟达','清仓'],['META','Meta','清仓(此前新建仓)'],['AVGO/KLAC/LRCX','博通/科磊/拉姆','清仓半导体设备'],['GLD','黄金ETF','清仓']]},
+
+/* ---- 迈克尔·伯里 / Scion (13F，末次为2025 Q3，基金已关闭) ---- */
+burry:{id:'burry',name:'伯里',full:'Michael Burry / Scion Asset Management',color:'#37474F',aum:'$13.8亿(2025Q3)',aumNum:13.8,source:'SEC 13F 2025 Q3(2025-11-03提交, 末次申报)',url:'https://www.sec.gov/Archives/edgar/data/1649339/000164933925000007/',
+q2:false,chartSkip:true,note:'⚠️ 非2026 Q2 · Scion基金已关闭，末次13F为2025 Q3 · 组合以看跌/看涨期权为主',
+ia:{Technology:66,Semis:13.5,Healthcare:13.8,Energy:4.5,Consumer:1.3,Financial:1.0},
+h:[
+['PLTR (Put)','Palantir 看跌期权',66.0,'$9.12亿','5,000,000','看跌 组合第一'],['NVDA (Put)','英伟达 看跌期权',13.5,'$1.87亿','1,000,000','看跌'],['PFE (Call)','辉瑞 看涨期权',11.1,'$1.53亿','6,000,000','看涨'],['HAL (Call)','哈里伯顿 看涨期权',4.5,'$0.62亿','2,500,000','看涨'],['MOH','Molina Healthcare',1.73,'$0.24亿','125,000','多头'],['LULU','Lululemon',1.29,'$0.18亿','100,000','多头'],['SLM','SLM Corp',0.96,'$0.13亿','480,054','多头'],['BRKR PFD','Bruker 优先股',0.95,'$0.13亿','48,334','多头']],
+mv:[['PLTR','Palantir','看跌期权$9.12亿 占组合66%'],['NVDA','英伟达','看跌期权$1.87亿 (与PLTR合计约$11亿)'],['PFE','辉瑞','看涨期权$1.53亿 反向押注'],['HAL','哈里伯顿','看涨期权$0.62亿 能源'],['基金关闭','Scion','2025 Q3为末次13F申报']]},
+
+/* ---- 佩洛西 (国会交易披露，非13F；金额为区间；配偶Paul Pelosi名下) ---- */
+pelosi:{id:'pelosi',name:'佩洛西',full:'Nancy Pelosi / 国会交易披露 (PTR)',color:'#AD1457',aum:'约$2.5亿(披露口径)',aumNum:0,source:'众议院 Periodic Transaction Report',url:'https://disclosures-clerk.house.gov/FinancialDisclosure',
+q2:false,mode:'disc',disc:'国会披露',chartSkip:true,note:'⚠️ 非13F · 金额为披露区间 · 配偶Paul Pelosi名下 · 2026年聚焦AI电力(英特尔/Bloom Energy)',
+h:[
+['GOOGL','Alphabet','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['AMZN','亚马逊','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['AAPL','苹果','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['AVGO','博通','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['MSFT','微软','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['NVDA','英伟达','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['CRM','Salesforce','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['V','Visa','$5M–$25M','普通股 · 配偶名下','核心持仓','持仓'],['PANW','Palo Alto Networks','较大仓位','普通股 · 配偶名下','网络安全','持仓'],['GOOGL (Call)','Alphabet 看涨','$1M–$5M','看涨期权','$150行权 · 2027-01到期','看涨'],['AMZN (Call)','亚马逊 看涨','$1M–$5M','看涨期权','$120行权 · 2027-01到期','看涨'],['NVDA (Call)','英伟达 看涨','$1M–$5M','看涨期权','$100行权 · 2027-01到期','看涨'],['TEM (Call)','Tempus AI 看涨','$1M–$5M','看涨期权','医疗AI','看涨'],['VST (Call)','Vistra 看涨','$1M–$5M','看涨期权','AI电力','看涨'],['IBKR/Dropbox/Block/Roblox','小仓位','< $1M','普通股','分散持仓','持仓']],
+mv:[['BE','Bloom Energy','7月末起连续买入(股票+看涨期权) 9/8披露约$300万 随后纳入标普500'],['INTC','英特尔','6月起买入看涨期权($50行权/2027-06到期) 2026年+121%'],['AAPL/NVDA/AMZN','苹果/英伟达/亚马逊','去年12月分别卖出(苹果4.5万股、英伟达与亚马逊各2万股)'],['期权到期','多只看涨期权','2027年1月到期'],['退休','佩洛西','退休前持续加码"AI电力"主题']]},
+
+/* ---- 特朗普 (总统财务披露 OGE 278e + STOCK Act 交易申报，非13F；金额为区间) ---- */
+trump:{id:'trump',name:'特朗普',full:'Donald Trump / 总统财务披露 (OGE 278e)',color:'#0D47A1',aum:'数十亿美元(区间披露)',aumNum:0,source:'OGE 278e + STOCK Act 交易申报',url:'https://www.oge.gov/web/oge.nsf/Officials%27+Financial+Disclosures',
+q2:false,mode:'disc',disc:'总统披露',chartSkip:true,note:'⚠️ 非13F · 金额为披露区间 · 交易极频繁(2026 Q1约3,700笔 / 6月1,051笔) · 核心资产DJT',
+h:[
+['BRK.B','伯克希尔B','$5M–$25M','普通股','6月大举买入','新建'],['V','Visa','$5M–$25M','普通股','6月买入','新建'],['MA','万事达','$5M–$25M','普通股','6月买入','新建'],['CTAS','信达思','$5M–$25M','普通股','6月买入','新建'],['MSFT','微软','$5M–$25M','普通股','持有','持仓'],['AMZN','亚马逊','$5M–$25M','普通股','持有','持仓'],['META','Meta','$1M–$5M','普通股','6/18卖出后小额补仓','减持'],['NVDA','英伟达','$1M–$5M','普通股','Q1买入','增持'],['AAPL','苹果','$1M–$5M','普通股','Q1买入(3/2)','增持'],['ORCL','甲骨文','$1M–$5M','普通股','Q1买入','增持'],['BA','波音','$1M–$5M','普通股','Q1买入','增持'],['COST','好市多','$1M–$5M','普通股','Q1买入','增持'],['NFLX','奈飞','$1M–$5M','普通股','最新披露大幅卖出','卖出'],['DIS/WBD/CMCSA','迪士尼/华纳/康卡斯特','$1M–$5M','普通股','持续交易传媒股','交易'],['DJT','特朗普媒体','核心资产','普通股','2026年腰斩 账面损失约$8亿','持有']],
+mv:[['BRK.B/V/MA/CTAS','伯克希尔/Visa/万事达/信达思','6月大举买入'],['META','Meta','6/18卖出$1M-5M 当月晚些时候小额补仓'],['NFLX','奈飞','最新披露大幅卖出'],['DIS/WBD/CMCSA','迪士尼/华纳/康卡斯特','传媒股持续交易'],['NVDA/AAPL/MSFT/AMZN','英伟达/苹果/微软/亚马逊','Q1 2026大举买入科技股'],['DJT','特朗普媒体','2026年腰斩 账面损失约$8亿']]}
 };
 
 /* ========== 大佬共识 ========== */
 const CC=[
-{ticker:'NVDA',company:'英伟达',h:[{n:'贝莱德',p:'5.77%',d:'第一重仓'},{n:'高盛GSAM',p:'4.42%',d:'第一重仓'},{n:'段永平',p:'6.58%',d:'-55%减持'},{n:'但斌',p:'13.15%',d:'第3大重仓'},{n:'木头姐',p:'1.16%',d:'-17%'}]},
-{ticker:'AAPL',company:'苹果',h:[{n:'巴菲特',p:'22.04%',d:'第一重仓'},{n:'段永平',p:'41.05%',d:'第一重仓'},{n:'贝莱德',p:'5.00%',d:'减持'},{n:'但斌',p:'0%',d:'Q2清仓'},{n:'高盛GSAM',p:'3.57%',d:'第3重仓'},{n:'李录',p:'0.86%',d:'微量'}]},
-{ticker:'GOOGL',company:'谷歌',h:[{n:'巴菲特',p:'12.62%',d:'Q2大幅增持'},{n:'李录',p:'47.94%',d:'第一重仓'},{n:'但斌',p:'22.48%',d:'第一重仓(仅GOOG)'},{n:'段永平',p:'3.64%',d:'-47%'},{n:'贝莱德',p:'2.30%',d:'第5重仓'},{n:'高盛GSAM',p:'3.20%',d:'重仓'},{n:'Baupost',p:'9.4%',d:'加仓'},{n:'潘兴广场',p:'0%',d:'Q2清仓'}]},
-{ticker:'MSFT',company:'微软',h:[{n:'贝莱德',p:'3.37%',d:'第三重仓'},{n:'高盛GSAM',p:'2.99%',d:'+20%'},{n:'潘兴广场',p:'11.89%',d:'Q2增持 第3大重仓'},{n:'段永平',p:'1.47%',d:'-26%'},{n:'第三点',p:'0%',d:'清仓'},{n:'但斌',p:'0%',d:'清仓'}]},
+{ticker:'NVDA',company:'英伟达',h:[{n:'贝莱德',p:'5.77%',d:'第一重仓'},{n:'高盛GSAM',p:'4.42%',d:'第一重仓'},{n:'段永平',p:'6.58%',d:'-55%减持'},{n:'但斌',p:'13.15%',d:'第3大重仓'},{n:'木头姐',p:'1.16%',d:'-17%'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'},{n:'特朗普',p:'$1M–$5M',d:'Q1买入'},{n:'伯里',p:'Put',d:'看跌期权$1.87亿'}]},
+{ticker:'AAPL',company:'苹果',h:[{n:'巴菲特',p:'22.04%',d:'第一重仓'},{n:'段永平',p:'41.05%',d:'第一重仓'},{n:'贝莱德',p:'5.00%',d:'减持'},{n:'但斌',p:'0%',d:'Q2清仓'},{n:'高盛GSAM',p:'3.57%',d:'第3重仓'},{n:'李录',p:'0.86%',d:'微量'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'},{n:'特朗普',p:'$1M–$5M',d:'Q1买入'}]},
+{ticker:'GOOGL',company:'谷歌',h:[{n:'巴菲特',p:'12.62%',d:'Q2大幅增持'},{n:'李录',p:'47.94%',d:'第一重仓'},{n:'但斌',p:'22.48%',d:'第一重仓(仅GOOG)'},{n:'段永平',p:'3.64%',d:'-47%'},{n:'贝莱德',p:'2.30%',d:'第5重仓'},{n:'高盛GSAM',p:'3.20%',d:'重仓'},{n:'Baupost',p:'9.4%',d:'加仓'},{n:'潘兴广场',p:'0%',d:'Q2清仓'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'}]},
+{ticker:'MSFT',company:'微软',h:[{n:'贝莱德',p:'3.37%',d:'第三重仓'},{n:'高盛GSAM',p:'2.99%',d:'+20%'},{n:'潘兴广场',p:'11.89%',d:'Q2增持 第3大重仓'},{n:'段永平',p:'1.47%',d:'-26%'},{n:'第三点',p:'0%',d:'清仓'},{n:'但斌',p:'0%',d:'清仓'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'},{n:'特朗普',p:'$5M–$25M',d:'持有'}]},
 {ticker:'TSLA',company:'特斯拉',h:[{n:'木头姐',p:'8.19%',d:'第一重仓'},{n:'段永平',p:'7.44%',d:'持平'},{n:'贝莱德',p:'1.35%',d:'减持'},{n:'但斌',p:'0%',d:'Q2清仓'},{n:'高盛GSAM',p:'1.46%',d:'-16%'}]},
-{ticker:'AMZN',company:'亚马逊',h:[{n:'潘兴广场',p:'10.49%',d:'Q2减持25% 第4大重仓'},{n:'Baupost',p:'17.4%',d:'第一重仓 +20%'},{n:'第三点',p:'8.92%',d:'增持'},{n:'贝莱德',p:'2.50%',d:'第4重仓'},{n:'高盛GSAM',p:'1.83%',d:'第6重仓'},{n:'木头姐',p:'2.20%',d:'持仓'},{n:'但斌',p:'0.87%',d:'减持'},{n:'巴菲特',p:'0%',d:'清仓'}]},
-{ticker:'AVGO',company:'博通',h:[{n:'贝莱德',p:'2.24%',d:'第6重仓'},{n:'高盛GSAM',p:'1.37%',d:'第8重仓'},{n:'但斌',p:'1.51%',d:'新建仓'},{n:'木头姐',p:'0.98%',d:'新建仓'},{n:'第三点',p:'0%',d:'清仓'}]},
+{ticker:'AMZN',company:'亚马逊',h:[{n:'潘兴广场',p:'10.49%',d:'Q2减持25% 第4大重仓'},{n:'Baupost',p:'17.4%',d:'第一重仓 +20%'},{n:'第三点',p:'8.92%',d:'增持'},{n:'贝莱德',p:'2.50%',d:'第4重仓'},{n:'高盛GSAM',p:'1.83%',d:'第6重仓'},{n:'木头姐',p:'2.20%',d:'持仓'},{n:'但斌',p:'0.87%',d:'减持'},{n:'巴菲特',p:'0%',d:'清仓'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'},{n:'特朗普',p:'$5M–$25M',d:'持有'}]},
+{ticker:'AVGO',company:'博通',h:[{n:'贝莱德',p:'2.24%',d:'第6重仓'},{n:'高盛GSAM',p:'1.37%',d:'第8重仓'},{n:'但斌',p:'1.51%',d:'新建仓'},{n:'木头姐',p:'0.98%',d:'新建仓'},{n:'第三点',p:'0%',d:'清仓'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'}]},
 {ticker:'TSM',company:'台积电',h:[{n:'第三点',p:'4.70%',d:'增持'},{n:'但斌',p:'3.97%',d:'新建仓'},{n:'高盛GSAM',p:'0.94%',d:'+83%'},{n:'木头姐',p:'1.39%',d:'-16%'},{n:'段永平',p:'0%',d:'清仓'}]},
-{ticker:'BRK.B',company:'伯克希尔',h:[{n:'段永平',p:'24.18%',d:'第二大重仓'},{n:'李录',p:'14.98%',d:'第四大重仓'},{n:'贝莱德',p:'0.90%',d:'-0.02% 微减'},{n:'高盛GSAM',p:'0.62%',d:'持有'}]},
-{ticker:'META',company:'Meta',h:[{n:'潘兴广场',p:'9.25%',d:'Q2增持'},{n:'但斌',p:'0.01%',d:'微量'},{n:'高盛GSAM',p:'1.36%',d:'+23.5%'},{n:'木头姐',p:'0.90%',d:'-48%'},{n:'第三点',p:'0%',d:'清仓'}]},
-{ticker:'QSR',company:'Restaurant Brands',h:[{n:'潘兴广场',p:'9.62%',d:'第6大重仓'},{n:'Baupost',p:'11.67%',d:'第二大重仓'}]},
+{ticker:'BRK.B',company:'伯克希尔B',h:[{n:'段永平',p:'24.18%',d:'第二大重仓'},{n:'李录',p:'14.98%',d:'第四大重仓'},{n:'贝莱德',p:'0.90%',d:'微减'},{n:'高盛GSAM',p:'0.62%',d:'持有'},{n:'特朗普',p:'$5M–$25M',d:'6月买入'}]},
+{ticker:'META',company:'Meta',h:[{n:'潘兴广场',p:'9.25%',d:'Q2增持'},{n:'但斌',p:'0.01%',d:'微量'},{n:'高盛GSAM',p:'1.36%',d:'+23.5%'},{n:'木头姐',p:'0.90%',d:'-48%'},{n:'第三点',p:'0%',d:'清仓'},{n:'特朗普',p:'$1M–$5M',d:'6月减持后补仓'}]},
+{ticker:'PLTR',company:'Palantir',h:[{n:'木头姐',p:'3.54%',d:'减持'},{n:'段永平',p:'0.04%',d:'持平'},{n:'伯里',p:'Put 66%',d:'看跌期权$9.12亿'}]},
+{ticker:'QSR',company:'汉堡王母公司',h:[{n:'潘兴广场',p:'9.62%',d:'第6大重仓'},{n:'Baupost',p:'11.67%',d:'第二大重仓'}]},
 {ticker:'BAC',company:'美国银行',h:[{n:'巴菲特',p:'9.20%',d:'Q2-6.1%'},{n:'李录',p:'0%',d:'清仓'}]},
 {ticker:'OXY',company:'西方石油',h:[{n:'巴菲特',p:'4.30%',d:'重仓'},{n:'段永平',p:'2.61%',d:'持平'},{n:'李录',p:'0%',d:'清仓'}]},
 {ticker:'MU',company:'美光',h:[{n:'但斌',p:'10.33%',d:'+102%'},{n:'贝莱德',p:'1.80%',d:'第8重仓'},{n:'高盛GSAM',p:'0.65%',d:'减持'}]},
-{ticker:'CRDO',company:'Credo Tech',h:[{n:'段永平',p:'1.00%',d:'-7%'},{n:'橡树资本',p:'0.80%',d:'新建仓'}]},
-{ticker:'PDD',company:'拼多多',h:[{n:'段永平',p:'9.99%',d:'+27%'},{n:'李录',p:'22.17%',d:'+133%大幅加仓'}]}
+{ticker:'CRDO',company:'Credo',h:[{n:'段永平',p:'1.00%',d:'-7%'},{n:'橡树资本',p:'0.80%',d:'新建仓'}]},
+{ticker:'PDD',company:'拼多多',h:[{n:'段永平',p:'9.99%',d:'+27%'},{n:'李录',p:'22.17%',d:'+133%大幅加仓'}]},
+{ticker:'V',company:'Visa',h:[{n:'潘兴广场',p:'5.76%',d:'新建仓'},{n:'Baupost',p:'4.14%',d:'新建仓'},{n:'佩洛西',p:'$5M–$25M',d:'核心持仓'},{n:'特朗普',p:'$5M–$25M',d:'6月买入'}]}
 ];
 
 /* ========== 收益率对比 ========== */
@@ -224,7 +245,10 @@ const PERF=[
 ['潘兴广场','2004成立至今','~16%','-','S&P 500: ~10%','Ackman集中持仓'],
 ['潘兴广场','2018年转型后8年','~22.6%','-','-','回归核心策略'],
 ['第三点','1996成立至今','~15%','-','S&P 500: ~10%','Dan Loeb激进主义'],
-['第三点','Ultra基金(1997-今)','~23.7%','-','-','杠杆基金版本']
+['第三点','Ultra基金(1997-今)','~23.7%','-','-','杠杆基金版本'],
+['伯里','Scion 2013-2023','~20%+','-','-','《大空头》原型;2025年关闭基金'],
+['佩洛西','国会交易披露','不适用','-','-','非基金·金额区间口径，无法计算CAGR'],
+['特朗普','总统财务披露','不适用','-','-','非基金·仅区间披露，无法计算CAGR']
 ];
 
 const IND_COLORS={Technology:'#3b82f6',Financial:'#10b981',Consumer:'#f59e0b',Healthcare:'#ef4444',Energy:'#8b5cf6',Insurance:'#06b6d4',Fintech:'#ec4899',Semis:'#6366f1','ETF/杠杆':'#14b8a6','Media/Telecom':'#a855f7',Materials:'#84cc16',Industrial:'#f97316',RealEstate:'#d946ef',Other:'#94a3b8'};
@@ -235,9 +259,10 @@ const ids=Object.keys(P);
 function sel(id){active=id;renderCards();renderTabs();renderDetail(id)}
 
 function renderCards(){
-document.getElementById('summaryCards').innerHTML=ids.map(id=>{const p=P[id];
-const pending=p.q2?'<span class=pending-tag style=background:#e8f5e9;color:#2e7d32>✅Q2已更新</span>':(p.note&&p.note.includes('待提交')?'<span class=pending-tag>Q2待提交</span>':'<span class=pending-tag style=background:#e8f5e9;color:#2e7d32>已更新</span>');
-return`<div class="summary-card${id===active?' active':''}" onclick="sel('${id}')"><div class=investor-name style=color:${p.color}>${p.name}${pending}</div><div class=investor-title>${p.full}</div><div class=stat-row><span class=label>管理市值</span><span class=value>${p.aum}</span></div><div class=stat-row><span class=label>持仓数量</span><span class=value>${p.h.length}只</span></div><div class=stat-row><span class=label>第一重仓</span><span class=value>${p.h[0][0]} (${p.h[0][2]}%)</span></div><div class=stat-row><span class=label>数据源</span><span class=value>${p.source}</span></div></div>`}).join('');
+document.getElementById('summaryCards').innerHTML=ids.map(id=>{const p=P[id];const disc=p.mode==='disc';
+const tag=disc?`<span class=pending-tag>${p.disc}</span>`:(p.q2?'<span class=pending-tag style=background:#e8f5e9;color:#2e7d32>✅Q2已更新</span>':'<span class=pending-tag>末次13F</span>');
+const first=disc?`${p.h[0][0]} ${p.h[0][2]}`:`${p.h[0][0]} (${p.h[0][2]}%)`;
+return`<div class="summary-card${id===active?' active':''}" onclick="sel('${id}')"><div class=investor-name style=color:${p.color}>${p.name}${tag}</div><div class=investor-title>${p.full}</div><div class=stat-row><span class=label>${disc?'披露口径':'管理市值'}</span><span class=value>${p.aum}</span></div><div class=stat-row><span class=label>${disc?'披露标的':'持仓数量'}</span><span class=value>${p.h.length}项</span></div><div class=stat-row><span class=label>${disc?'首项':'第一重仓'}</span><span class=value>${first}</span></div><div class=stat-row><span class=label>数据源</span><span class=value>${p.source}</span></div></div>`}).join('');
 }
 
 function renderTabs(){
@@ -245,16 +270,18 @@ document.getElementById('detailTabs').innerHTML=ids.map(id=>`<div class="tab${id
 }
 
 function renderDetail(id){
-const p=P[id];
-const q2note=p.q2?'✅ Q2 2026 13F已提交 · 以下为Q2数据(截至2026年6月30日)':(p.note&&p.note.includes('待提交')?(p.note.includes('含Q2')?'⚠️ Q2 2026 13F尚未提交 · 含巴菲特Q2已知交易 · 以下为Q1 2026 SEC原始数据(截至2026年3月31日)':'⚠️ 该机构Q2 2026 13F尚未提交(8/14截止)，以下为Q1 2026数据（截至2026年3月31日）'):'⚠️ '+p.note);
-document.getElementById('detailSource').innerHTML=`${q2note}<br>数据来源: ${p.url?`<a href="${p.url}" target=_blank>${p.source}</a>`:p.source} · SEC 13F`;
+const p=P[id];const disc=p.mode==='disc';
+const q2note=disc?(p.note):(p.q2?'✅ Q2 2026 13F已提交 · 以下为Q2数据(截至2026年6月30日)':p.note);
+document.getElementById('detailSource').innerHTML=`${q2note}<br>数据来源: ${p.url?`<a href="${p.url}" target=_blank>${p.source}</a>`:p.source}${disc?'':' · SEC 13F'}`;
+const c4=disc?'金额区间':'占比',c5=disc?'类别':'市值';
 const rows=p.h.map((r,i)=>{let chg=r[5],cl='change-neutral',ic='⚪';
-if(chg.includes('+')||chg.includes('买入')||chg.includes('增持')||chg.includes('新建')||chg.includes('新买')||chg.includes('加仓')){cl='change-up';ic='🟢'}
-else if(chg.includes('-')||chg.includes('减持')||chg.includes('清仓')||chg.includes('减仓')){cl='change-down';ic='🔴'}
-return`<tr><td>${i+1}</td><td class=stock-ticker>${r[0]}</td><td>${r[1]}</td><td>${r[2]}%</td><td>${r[3]}</td><td class=${cl}>${ic} ${chg||'-'}</td></tr>`;
+if(chg.includes('+')||chg.includes('买入')||chg.includes('增持')||chg.includes('新建')||chg.includes('新买')||chg.includes('加仓')||chg.includes('看涨')||chg.includes('持仓')||chg.includes('持有')){cl='change-up';ic='🟢'}
+else if(chg.includes('-')||chg.includes('减持')||chg.includes('清仓')||chg.includes('减仓')||chg.includes('看跌')||chg.includes('卖出')){cl='change-down';ic='🔴'}
+const c5v=disc?`${r[3]}${r[4]?' · '+r[4]:''}`:r[3];
+return`<tr><td>${i+1}</td><td class=stock-ticker>${r[0]}</td><td>${r[1]}</td><td>${r[2]}${disc?'':'%'}</td><td>${c5v}</td><td class=${cl}>${ic} ${chg||'-'}</td></tr>`;
 }).join('');
-const tp=p.h.reduce((s,r)=>s+r[2],0).toFixed(1);
-document.getElementById('detailContent').innerHTML=`<div style=margin-bottom:10px;font-size:13px;color:#666>管理市值: <strong>${p.aum}</strong> · 持仓: <strong>${p.h.length}只</strong> · 前十大集中度: ${tp}% · ${q2note}</div><div class=table-wrap><table><thead><tr><th>#</th><th>代码</th><th>公司</th><th>占比</th><th>市值</th><th>变动</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+const sum=disc?`披露口径: <strong>${p.aum}</strong> · 披露标的: <strong>${p.h.length}项</strong> · ${p.note}`:`管理市值: <strong>${p.aum}</strong> · 持仓: <strong>${p.h.length}只</strong> · 前十大集中度: ${p.h.reduce((s,r)=>s+(+r[2]||0),0).toFixed(1)}%`;
+document.getElementById('detailContent').innerHTML=`<div style=margin-bottom:10px;font-size:13px;color:#666>${sum}</div><div class=table-wrap><table><thead><tr><th>#</th><th>代码</th><th>公司</th><th>${c4}</th><th>${c5}</th><th>变动</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
 function renderConsensus(){
@@ -262,23 +289,25 @@ document.getElementById('consensusContent').innerHTML=`<div class=consensus-grid
 }
 
 function renderPerf(){
-const cl={'巴菲特':'#8B4513','段永平':'#2E7D32','木头姐':'#E91E63','李录':'#1565C0','但斌':'#E65100','高盛GSAM':'#003A70','贝莱德':'#663300','橡树资本':'#D4AF37','Baupost':'#1a5276','潘兴广场':'#e74c3c','第三点':'#8e44ad'};
-document.getElementById('perfTable').innerHTML=`<table><thead><tr><th>大佬</th><th>时间区间</th><th>年化CAGR</th><th>累计回报</th><th>对标基准</th><th>备注</th></tr></thead><tbody>${PERF.map((r,i)=>`<tr style=background:${i%2===0?'#f8f9fa':'#fff'}>${r.map((c,j)=>{let sty='';if(j===0&&cl[c])sty=`style=color:${cl[c]};font-weight:600`;if(j===2&&c.includes('%'))sty+=`;font-weight:600`;return`<td${sty?` ${sty}`:''}>${c}</td>`}).join('')}</tr>`).join('')}</tbody></table><div style=margin-top:8px;font-size:12px;color:#999>⚠️ 不同时间区间/规模的收益率不可直接对比。截至2026-08-19，11位大佬 Q2 13F 已全部可查（潘兴经母公司 Pershing Square Inc. 披露完整持仓）。历史收益率数据不变。</div>`;
+const cl={'巴菲特':'#8B4513','段永平':'#2E7D32','木头姐':'#E91E63','李录':'#1565C0','但斌':'#E65100','高盛GSAM':'#003A70','贝莱德':'#663300','橡树资本':'#D4AF37','Baupost':'#1a5276','潘兴广场':'#e74c3c','第三点':'#8e44ad','伯里':'#37474F','佩洛西':'#AD1457','特朗普':'#0D47A1'};
+document.getElementById('perfTable').innerHTML=`<table><thead><tr><th>大佬</th><th>时间区间</th><th>年化CAGR</th><th>累计回报</th><th>对标基准</th><th>备注</th></tr></thead><tbody>${PERF.map((r,i)=>`<tr style=background:${i%2===0?'#f8f9fa':'#fff'}>${r.map((c,j)=>{let sty='';if(j===0&&cl[c])sty=`style=color:${cl[c]};font-weight:600`;if(j===2&&c.includes('%'))sty+=`;font-weight:600`;return`<td${sty?` ${sty}`:''}>${c}</td>`}).join('')}</tr>`).join('')}</tbody></table><div style=margin-top:8px;font-size:12px;color:#999>⚠️ 不同时间区间/规模的收益率不可直接对比。佩洛西/特朗普为国会与总统披露口径(金额区间)，无法计算年化。伯里Scion基金已于2025年关闭，末次13F为2025 Q3。</div>`;
 }
 
 function renderCharts(){
 Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}});charts={};
 const inds=['Technology','Financial','Consumer','Healthcare','Energy','Semis','Fintech','Insurance','ETF/杠杆','Media/Telecom','Materials','Industrial','RealEstate','Other'];
-const ds=ids.map(id=>{const p=P[id];return{label:p.name,data:inds.map(i=>p.ia[i]||0),backgroundColor:p.color+'80',borderColor:p.color,borderWidth:2}});
-charts.industry=new Chart(document.getElementById('industryChart'),{type:'bar',data:{labels:inds,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'行业配置对比 (%)',font:{size:13}},legend:{position:'bottom',labels:{font:{size:11}}}}}});
-charts.aum=new Chart(document.getElementById('investorAumChart'),{type:'doughnut',data:{labels:ids.map(id=>P[id].name),datasets:[{data:ids.map(id=>P[id].aumNum),backgroundColor:ids.map(id=>P[id].color+'CC'),borderColor:ids.map(id=>P[id].color),borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'管理市值对比 (亿美元)',font:{size:13}},legend:{position:'bottom'}}}});
+const indIds=ids.filter(id=>!P[id].chartSkip);
+const aumIds=ids.filter(id=>P[id].aumNum>0);
+const ds=indIds.map(id=>{const p=P[id];return{label:p.name,data:inds.map(i=>p.ia[i]||0),backgroundColor:p.color+'80',borderColor:p.color,borderWidth:2}});
+charts.industry=new Chart(document.getElementById('industryChart'),{type:'bar',data:{labels:inds,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'行业配置对比 (%) - 仅13F多头口径',font:{size:13}},legend:{position:'bottom',labels:{font:{size:11}}}}}});
+charts.aum=new Chart(document.getElementById('investorAumChart'),{type:'doughnut',data:{labels:aumIds.map(id=>P[id].name),datasets:[{data:aumIds.map(id=>P[id].aumNum),backgroundColor:aumIds.map(id=>P[id].color+'CC'),borderColor:aumIds.map(id=>P[id].color),borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'管理市值对比 (亿美元)',font:{size:13}},legend:{position:'bottom'}}}});
 const stocks=['NVDA','AAPL','GOOGL/GOOG','MSFT','TSLA','AMZN','META','AVGO','TSM'];
-charts.holdings=new Chart(document.getElementById('topHoldingChart'),{type:'bar',data:{labels:stocks,datasets:ids.map(id=>{const p=P[id];return{label:p.name,data:stocks.map(s=>{if(s==='GOOGL/GOOG'){const g=p.h.filter(r=>r[0]==='GOOGL'||r[0]==='GOOG'||r[0]==='GOOGL+A');return g.reduce((sum,r)=>sum+r[2],0)}const h=p.h.find(r=>r[0]===s);return h?h[2]:0}),backgroundColor:p.color+'80',borderColor:p.color,borderWidth:2}})},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'核心标的 - 各机构持仓占比 (%)',font:{size:13}},legend:{position:'bottom'}}}});
+charts.holdings=new Chart(document.getElementById('topHoldingChart'),{type:'bar',data:{labels:stocks,datasets:indIds.map(id=>{const p=P[id];return{label:p.name,data:stocks.map(s=>{if(s==='GOOGL/GOOG'){const g=p.h.filter(r=>r[0]==='GOOGL'||r[0]==='GOOG'||r[0]==='GOOGL+A');return g.reduce((sum,r)=>sum+(+r[2]||0),0)}const h=p.h.find(r=>r[0]===s);return h?(+h[2]||0):0}),backgroundColor:p.color+'80',borderColor:p.color,borderWidth:2}})},options:{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'核心标的 - 各机构持仓占比 (%)',font:{size:13}},legend:{position:'bottom'}}}});
 }
 
 function renderMoves(){
 const all=[];Object.values(P).forEach(p=>{p.mv.forEach(m=>all.push({...m,inv:p.name,color:p.color}))});
-document.getElementById('movesGrid').innerHTML=all.map(m=>{const isBuy=m[2].includes('建仓')||m[2].includes('+')||m[2].includes('增持')||m[2].includes('新买')||m[2].includes('新买入')||m[2].includes('新建')||m[2].includes('抄底')||m[2].includes('加仓');
+document.getElementById('movesGrid').innerHTML=all.map(m=>{const isBuy=m[2].includes('建仓')||m[2].includes('+')||m[2].includes('增持')||m[2].includes('新买')||m[2].includes('新买入')||m[2].includes('新建')||m[2].includes('抄底')||m[2].includes('加仓')||m[2].includes('买入')||m[2].includes('看涨');
 return`<div class="move-card ${isBuy?'move-buy':'move-sell'}"><div class=move-header>${isBuy?'🟢':'🔴'} ${m[0]} ${m[1]}</div><div class=move-detail>${m[2]}</div><div class=move-source style=color:${m.color}>${m.inv}</div></div>`;
 }).join('');
 }
@@ -286,7 +315,7 @@ return`<div class="move-card ${isBuy?'move-buy':'move-sell'}"><div class=move-he
 function refreshData(){
 const btn=document.querySelector('.refresh-btn');btn.textContent='⏳...';btn.disabled=true;
 document.getElementById('refreshTime').textContent='刷新中...';
-window.cowork.askClaude('检查11位大佬最新13F持仓更新',[{role:'user',content:'请更新'}]).then(r=>{document.getElementById('refreshTime').textContent='✓ '+new Date().toLocaleString('zh-CN');btn.textContent='🔄 刷新';btn.disabled=false}).catch(e=>{document.getElementById('refreshTime').textContent='⚠️ '+e.message;btn.textContent='🔄 重试';btn.disabled=false});
+window.cowork.askClaude('检查14位大佬最新持仓/披露更新',[{role:'user',content:'请更新'}]).then(r=>{document.getElementById('refreshTime').textContent='✓ '+new Date().toLocaleString('zh-CN');btn.textContent='🔄 刷新';btn.disabled=false}).catch(e=>{document.getElementById('refreshTime').textContent='⚠️ '+e.message;btn.textContent='🔄 重试';btn.disabled=false});
 }
 
 document.addEventListener('DOMContentLoaded',()=>{document.getElementById('refreshTime').textContent='加载: '+new Date().toLocaleString('zh-CN');renderCards();renderTabs();renderDetail(active);renderConsensus();renderPerf();renderCharts();renderMoves();});
