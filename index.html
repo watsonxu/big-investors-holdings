@@ -70,9 +70,10 @@ tr:hover td{background:#f8faff}
 <div class=container>
 <div class=header>
 <div><h1>📊 二级市场大佬持仓看板</h1><div class=subtitle>巴菲特 · 段永平 · 木头姐 · 李录 · 但斌 · 高盛 · 贝莱德 · 橡树 · Baupost · 潘兴 · 第三点 · 伯里 · 佩洛西 · 特朗普 — 11家 2026 Q2 13F + 伯里13F(2025Q3) + 佩洛西国会披露 + 特朗普总统披露</div></div>
-<div class=header-right><div>数据: 13F为2026 Q2(Q3申报11/14截止) · 佩洛西/特朗普更新至10月 · 更新 2026-10-15</div><div class=data-time id=refreshTime>加载中...</div><button class=refresh-btn onclick=refreshData()>🔄 刷新</button></div>
+<div class=header-right><div>数据: 13F为2026 Q2(Q3申报11/14截止) · 佩洛西/特朗普更新至10月 · 更新 2026-10-16</div><div class=data-time id=refreshTime>加载中...</div><button class=refresh-btn onclick=refreshData()>🔄 刷新</button></div>
 </div>
 <div class=summary-grid id=summaryCards></div>
+<div style="font-size:11px;color:#999;margin:-14px 0 20px;line-height:1.5">收益率口径：<b>近一年</b>=公开载体总回报(2025-10-16→2026-10-15)，无公开载体的私募标「—」并注明原因；<b>历年年化</b>=各人公开的长期业绩，区间已在卡片中标注。高盛/贝莱德为其上市母公司股价回报，非旗下基金。非投资建议。</div>
 <div class=section>
 <div class=section-title>📋 持仓明细 <span class=count>点击上方卡片 / Tab 切换 · 后三位口径不同，已单独标注</span></div>
 <div class=tabs id=detailTabs></div>
@@ -253,16 +254,35 @@ const PERF=[
 
 const IND_COLORS={Technology:'#3b82f6',Financial:'#10b981',Consumer:'#f59e0b',Healthcare:'#ef4444',Energy:'#8b5cf6',Insurance:'#06b6d4',Fintech:'#ec4899',Semis:'#6366f1','ETF/杠杆':'#14b8a6','Media/Telecom':'#a855f7',Materials:'#84cc16',Industrial:'#f97316',RealEstate:'#d946ef',Other:'#94a3b8'};
 
+/* ===== 收益率：ann=历年年化(公开长期业绩)，y1=近一年(2025-10-16→2026-10-15)，s=口径来源 ===== */
+const RET={
+buffet:{ann:'19.9% (1965-2024, 59年)',y1:'+7.5%',s:'BRK.B 总回报'},
+duan:{ann:'24% (苹果持仓14年)',y1:'—',s:'私募 无公开净值'},
+cathie:{ann:'12% (ARKK 2014-)',y1:'−1.1%',s:'ARKK 总回报'},
+lilu:{ann:'20%+ (1997-2023)',y1:'—',s:'私募 无公开净值'},
+danbin:{ann:'7.3% (近6年)',y1:'+20.3%',s:'东方港湾 2026前3季'},
+gsam:{ann:'— (资管非基金)',y1:'+19.9%',s:'GS 母行股价'},
+blackrock:{ann:'~11% (近5年)',y1:'−2.3%',s:'BLK 股价(非旗下基金)'},
+oaktree:{ann:'~18.8% (成立以来)',y1:'—',s:'OAK 已退市'},
+baupost:{ann:'~19% (1982-2012)',y1:'—',s:'私募 无公开净值'},
+pershing:{ann:'~16% (2004-)',y1:'−18.1%',s:'PSH.L 总回报'},
+thirdpoint:{ann:'~15% (1996-)',y1:'—',s:'仅月度披露'},
+burry:{ann:'~20%+ (2013-23)',y1:'—',s:'基金已关闭'},
+pelosi:{ann:'不适用',y1:'—',s:'无基金'},
+trump:{ann:'不适用',y1:'—',s:'无基金'}
+};
+
 let active='buffet',charts={};
 const ids=Object.keys(P);
 
 function sel(id){active=id;renderCards();renderTabs();renderDetail(id)}
 
 function renderCards(){
-document.getElementById('summaryCards').innerHTML=ids.map(id=>{const p=P[id];const disc=p.mode==='disc';
+document.getElementById('summaryCards').innerHTML=ids.map(id=>{const p=P[id];const disc=p.mode==='disc';const r=RET[id]||{ann:'—',y1:'—',s:''};
 const tag=disc?`<span class=pending-tag>${p.disc}</span>`:(p.q2?'<span class=pending-tag style=background:#e8f5e9;color:#2e7d32>✅Q2已更新</span>':'<span class=pending-tag>末次13F</span>');
 const first=disc?`${p.h[0][0]} ${p.h[0][2]}`:`${p.h[0][0]} (${p.h[0][2]}%)`;
-return`<div class="summary-card${id===active?' active':''}" onclick="sel('${id}')"><div class=investor-name style=color:${p.color}>${p.name}${tag}</div><div class=investor-title>${p.full}</div><div class=stat-row><span class=label>${disc?'披露口径':'管理市值'}</span><span class=value>${p.aum}</span></div><div class=stat-row><span class=label>${disc?'披露标的':'持仓数量'}</span><span class=value>${p.h.length}项</span></div><div class=stat-row><span class=label>${disc?'首项':'第一重仓'}</span><span class=value>${first}</span></div><div class=stat-row><span class=label>数据源</span><span class=value>${p.source}</span></div></div>`}).join('');
+const y1c=r.y1==='—'?'#999':((r.y1.charAt(0)==='−'||r.y1.charAt(0)==='-')?'#27ae60':'#e74c3c');
+return`<div class="summary-card${id===active?' active':''}" onclick="sel('${id}')"><div class=investor-name style=color:${p.color}>${p.name}${tag}</div><div class=investor-title>${p.full}</div><div class=stat-row><span class=label>历年年化</span><span class=value>${r.ann}</span></div><div class=stat-row><span class=label>近一年收益</span><span class=value style=color:${y1c}>${r.y1}<span style="color:#999;font-weight:400;font-size:10px"> ${r.s}</span></span></div><div class=stat-row><span class=label>${disc?'披露口径':'管理市值'}</span><span class=value>${p.aum}</span></div><div class=stat-row><span class=label>${disc?'披露标的':'持仓数量'}</span><span class=value>${p.h.length}项</span></div><div class=stat-row><span class=label>${disc?'首项':'第一重仓'}</span><span class=value>${first}</span></div><div class=stat-row><span class=label>数据源</span><span class=value>${p.source}</span></div></div>`}).join('');
 }
 
 function renderTabs(){
